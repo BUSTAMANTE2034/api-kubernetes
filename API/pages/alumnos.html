@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: 0 auto; }
+        .section { margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .section h2 { margin-top: 0; }
+        .section input, .section button { padding: 10px; margin: 5px 0; width: 100%; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 10px; text-align: center; }
+    </style>
+    <script>
+        const apiUrl = 'https://lalo2034.pythonanywhere.com';
+
+        async function createUser() {
+            const data = {
+                student_id: document.getElementById('create_id').value,
+                full_name: document.getElementById('create_name').value,
+                major: document.getElementById('create_major').value,
+                semester: document.getElementById('create_semester').value,
+                age: document.getElementById('create_age').value,
+                complementary_credits: document.getElementById('create_credits').value || 0
+            };
+
+            const response = await fetch(`${apiUrl}/students`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function updateUser() {
+            const id = document.getElementById('update_id').value;
+            const data = {
+                full_name: document.getElementById('update_name').value,
+                major: document.getElementById('update_major').value,
+                semester: document.getElementById('update_semester').value,
+                age: document.getElementById('update_age').value,
+                complementary_credits: document.getElementById('update_credits').value || 0
+            };
+
+            const response = await fetch(`${apiUrl}/students/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function getAllUsers() {
+            const response = await fetch(`${apiUrl}/students`);
+            const students = await response.json();
+            const tableBody = document.getElementById('students_table_body');
+            tableBody.innerHTML = '';
+
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.student_id}</td>
+                    <td>${student.full_name}</td>
+                    <td>${student.major}</td>
+                    <td>${student.semester}</td>
+                    <td>${student.age}</td>
+                    <td>${student.complementary_credits}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function deleteUser() {
+            const id = document.getElementById('delete_id').value;
+            const response = await fetch(`${apiUrl}/students/${id}`, { method: 'DELETE' });
+            const result = await response.json();
+            alert(result.message);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Alumnos</h1>
+
+        <!-- Crear Usuario -->
+        <div class="section">
+            <h2>Crear Usuario</h2>
+            <input type="text" id="create_id" placeholder="ID de Estudiante" required>
+            <input type="text" id="create_name" placeholder="Nombre Completo" required>
+            <input type="text" id="create_major" placeholder="Carrera" required>
+            <input type="number" id="create_semester" placeholder="Semestre" required>
+            <input type="number" id="create_age" placeholder="Edad" required>
+            <input type="number" id="create_credits" placeholder="Créditos Complementarios">
+            <button onclick="createUser()">Crear Usuario</button>
+        </div>
+
+        <!-- Actualizar Usuario -->
+        <div class="section">
+            <h2>Actualizar Usuario</h2>
+            <input type="text" id="update_id" placeholder="ID de Estudiante" required>
+            <input type="text" id="update_name" placeholder="Nuevo Nombre Completo">
+            <input type="text" id="update_major" placeholder="Nueva Carrera">
+            <input type="number" id="update_semester" placeholder="Nuevo Semestre">
+            <input type="number" id="update_age" placeholder="Nueva Edad">
+            <input type="number" id="update_credits" placeholder="Nuevos Créditos Complementarios">
+            <button onclick="updateUser()">Actualizar Usuario</button>
+        </div>
+
+        <!-- Mostrar Todos los Usuarios -->
+        <div class="section">
+            <h2>Mostrar Todos los Usuarios</h2>
+            <button onclick="getAllUsers()">Cargar Usuarios</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Carrera</th>
+                        <th>Semestre</th>
+                        <th>Edad</th>
+                        <th>Créditos Complementarios</th>
+                    </tr>
+                </thead>
+                <tbody id="students_table_body"></tbody>
+            </table>
+        </div>
+
+        <!-- Eliminar Usuario -->
+        <div class="section">
+            <h2>Eliminar Usuario</h2>
+            <input type="text" id="delete_id" placeholder="ID de Estudiante" required>
+            <button onclick="deleteUser()">Eliminar Usuario</button>
+        </div>
+    </div>
+</body>
+</html>

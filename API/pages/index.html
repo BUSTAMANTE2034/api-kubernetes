@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Alumnos, Maestros, Actividades y Clases en Progreso</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: 0 auto; }
+        .section { margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .section h2 { margin-top: 0; }
+        .section input, .section button { padding: 10px; margin: 5px 0; width: 100%; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 10px; text-align: center; }
+    </style>
+    <script>
+        const apiUrl = 'https://lalo2034.pythonanywhere.com';
+
+        // Funciones para Estudiantes
+
+        // Funciones para Maestros
+        async function createTeacher() {
+            const data = {
+                teacher_id: document.getElementById('create_teacher_id').value,
+                full_name: document.getElementById('create_teacher_name').value,
+                activity_id: document.getElementById('create_teacher_activity_id').value
+            };
+            const response = await fetch(`${apiUrl}/teachers`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function updateTeacher() {
+            const id = document.getElementById('update_teacher_id').value;
+            const data = {
+                full_name: document.getElementById('update_teacher_name').value,
+                activity_id: document.getElementById('update_teacher_activity_id').value
+            };
+            const response = await fetch(`${apiUrl}/teachers/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function getAllTeachers() {
+            const response = await fetch(`${apiUrl}/teachers`);
+            const teachers = await response.json();
+            const tableBody = document.getElementById('teachers_table_body');
+            tableBody.innerHTML = '';
+            teachers.forEach(teacher => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${teacher.teacher_id}</td>
+                    <td>${teacher.full_name}</td>
+                    <td>${teacher.activity_id}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function deleteTeacher() {
+            const id = document.getElementById('delete_teacher_id').value;
+            const response = await fetch(`${apiUrl}/teachers/${id}`, { method: 'DELETE' });
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        // Funciones para Actividades
+        async function createActivity() {
+            const data = {
+                name: document.getElementById('create_activity_name').value,
+                total_hours: document.getElementById('create_activity_hours').value
+            };
+            const response = await fetch(`${apiUrl}/activities`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function updateActivity() {
+            const id = document.getElementById('update_activity_id').value;
+            const data = {
+                name: document.getElementById('update_activity_name').value,
+                total_hours: document.getElementById('update_activity_hours').value
+            };
+            const response = await fetch(`${apiUrl}/activities/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.data);
+        }
+
+        async function getAllActivities() {
+            const response = await fetch(`${apiUrl}/activities`);
+            const activities = await response.json();
+            const tableBody = document.getElementById('activities_table_body');
+            tableBody.innerHTML = '';
+            activities.forEach(activity => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${activity.activity_id}</td>
+                    <td>${activity.name}</td>
+                    <td>${activity.total_hours}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function deleteActivity() {
+            const id = document.getElementById('delete_activity_id').value;
+            const response = await fetch(`${apiUrl}/activities/${id}`, { method: 'DELETE' });
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        // Funciones para Clases en Progreso
+
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestión de Alumnos, Maestros, Actividades y Clases en Progreso</h1>
+
+        <!-- Secciones para Maestros, Actividades y Clases en Progreso -->
+
+
+        <!-- Crear Maestro -->
+        <div class="section">
+            <h2>Crear Maestro</h2>
+            <input type="text" id="create_teacher_id" placeholder="ID del Maestro" required>
+            <input type="text" id="create_teacher_name" placeholder="Nombre Completo" required>
+            <input type="text" id="create_teacher_activity_id" placeholder="ID de Actividad" required>
+            <button onclick="createTeacher()">Crear Maestro</button>
+        </div>
+
+        <!-- Mostrar Todos los Maestros -->
+        <div class="section">
+            <h2>Mostrar Todos los Maestros</h2>
+            <button onclick="getAllTeachers()">Cargar Maestros</button>
+            <table>
+                <thead>
+                    <tr><th>ID</th><th>Nombre</th><th>ID Actividad</th></tr>
+                </thead>
+                <tbody id="teachers_table_body"></tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
