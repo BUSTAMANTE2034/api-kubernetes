@@ -1,0 +1,10 @@
+Server:EDUARDOB\SQLEXPRESS
+User:login
+password:426671979
+
+user: Lalo2034
+password: Ing.Bustaduar
+Database:Lalo2034$AC
+Database host address:Lalo2034.mysql.pythonanywhere-services.com
+
+URI:mysql+pymysql://Lalo2034:Ing.Bustaduar@Lalo2034.mysql.pythonanywhere-services.com:3306/Lalo2034$AC
