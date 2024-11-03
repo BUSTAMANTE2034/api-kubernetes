@@ -21,8 +21,8 @@ def test_get_activities():
 def test_update_activity(activity_id):
     """Prueba para actualizar una actividad existente"""
     response = requests.put(f"{BASE_URL}/activities/{activity_id}", json={
-        "name": "Taller de Programación Avanzada",
-        "total_hours": 30,
+        "name": "Fútbol",
+        "total_hours": 100,
     })
     print("Update Activity Response:", response.json())
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     #test_create_activity()
     test_get_activities()
     test_update_activity(1)  
-    #test_delete_activity(1)  
+    test_delete_activity(1)  
 
     # Estudiantes
     #test_create_student()
