@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, inspect
 
 # URI de la base de datos
-url = "mssql+pyodbc://login:426671979@EDUARDOB\\SQLEXPRESS/AEE?driver=ODBC+Driver+17+for+SQL+Server"
+url = "mssql+pyodbc://login:426671979@EDUARDOB\\SQLEXPRESS/Act?driver=ODBC+Driver+17+for+SQL+Server"
 
 # Crear la conexión a la base de datos
 engine = create_engine(url)
