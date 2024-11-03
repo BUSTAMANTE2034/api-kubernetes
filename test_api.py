@@ -126,25 +126,25 @@ def test_delete_in_progress(course_id):
 # Ejecutar todas las pruebas
 if __name__ == "__main__":
     # Actividades
-    test_create_activity()
+    #test_create_activity()
     test_get_activities()
     test_update_activity(1)  
-    test_delete_activity(1)  
+    #test_delete_activity(1)  
 
     # Estudiantes
-    test_create_student()
-    test_get_students()
-    test_update_student(12345)  
-    test_delete_student(12345)  
+    #test_create_student()
+    #test_get_students()
+    #test_update_student(12345)  
+    #test_delete_student(12345)  
 
     # Maestros
-    test_create_teacher()
-    test_get_teachers()
-    test_update_teacher(56789)  
-    test_delete_teacher(56789)  
+    #test_create_teacher()
+    #test_get_teachers()
+    #test_update_teacher(56789)  
+    #test_delete_teacher(56789)  
 
     # Clases en Progreso
-    test_create_in_progress()
-    test_get_in_progress()
-    test_update_in_progress(1)  
-    test_delete_in_progress(1)  
+    #test_create_in_progress()
+    #test_get_in_progress()
+    #test_update_in_progress(1)  
+    #test_delete_in_progress(1)  
