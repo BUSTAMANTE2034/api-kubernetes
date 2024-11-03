@@ -8,8 +8,8 @@ BASE_URL = "http://127.0.0.1:8000"
 def test_create_activity():
     """Prueba para crear una nueva actividad"""
     response = requests.post(f"{BASE_URL}/activities/", json={
-        "name": "Taller de Programación",
-        "total_hours": 20
+        "name": "Fútbol",
+        "total_hours": 90
     })
     print("Create Activity Response:", response.json())
 
@@ -22,7 +22,7 @@ def test_update_activity(activity_id):
     """Prueba para actualizar una actividad existente"""
     response = requests.put(f"{BASE_URL}/activities/{activity_id}", json={
         "name": "Taller de Programación Avanzada",
-        "total_hours": 30
+        "total_hours": 30,
     })
     print("Update Activity Response:", response.json())
 
@@ -69,7 +69,6 @@ def test_create_teacher():
         "teacher_id": 56789,
         "full_name": "Carlos Perez",
         "activity_id": 1  
-d exista
     })
     print("Create Teacher Response:", response.json())
 
@@ -95,9 +94,7 @@ def test_create_in_progress():
     """Prueba para crear una nueva clase en progreso"""
     response = requests.post(f"{BASE_URL}/in_progress/", json={
         "student_id": 12345,  
-te exista
         "teacher_id": 56789,  
-exista
         "day_of_week": "Lunes",
         "schedule": "10:00 - 12:00",
         "hours_completed": 10,

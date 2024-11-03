@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clona el repositorio 
+                git 'https://github.com/BUSTAMANTE2034/jenkins-api.git'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                // Instala las dependencias
+                bat 'pip install -r requirements.txt'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                // Ejecuta las pruebas y guarda el resultado en un archivo
+                bat 'python test_api.py > test_results.txt'
+            }
+        }
+        stage('Publish Results') {
+            steps {
+                // Publica los resultados del archivo como HTML
+                publishHTML(target: [
+                    reportName : 'Test Results',
+                    reportDir  : '.',
+                    reportFiles: 'test_results.txt',
+                    alwaysLinkToLastBuild: true
+                ])
+            }
+        }
+    }
+}
